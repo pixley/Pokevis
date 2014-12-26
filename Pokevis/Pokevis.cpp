@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include "core.h"c
 
 
 int _tmain(int argc, _TCHAR* argv[])
