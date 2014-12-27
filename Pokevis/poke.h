@@ -1,4 +1,5 @@
 #include <string>
+#include "display.h"
 using namespace std;
 
 class Poke{
@@ -13,22 +14,20 @@ public:
 	//catch constructor
 	Poke(unsigned int num, string name, unsigned int lvl);
 	//load constructor
-	Poke(unsigned int num, string name, unsigned int lvl, bool live, string cod);
-	//default constructor
-	Poke();
+	Poke(string log);
 
 	//level incrementer
 	void Ding();
-	//level getter
-	unsigned int GetLvl();
 
 	//kills the Pokemon
 	void Kill(string cod);
-	//living status getter
-	bool Living();
 
-	//species getter
-	unsigned int Species();
 	//evolver
 	void Evolve(unsigned int newNum);
+
+	//string representation of the Poke for saving
+	string ToString();
+
+	//initiates drawing of Poke status to screen
+	void Draw(unsigned int partyPos, Displayer& disp);
 };

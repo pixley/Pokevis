@@ -2,11 +2,16 @@
 //
 
 #include "stdafx.h"
-#include "core.h"c
+#include "core.h"
 
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	Core core;
+	if (core.Init()){
+		core.Loop();
+	}
+
 	return 0;
 }
 

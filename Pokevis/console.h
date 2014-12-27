@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-enum Event {
+enum Action {
 	DEFAULT,
 	CATCH,
 	DING,
@@ -10,9 +10,10 @@ enum Event {
 	VICTORY,
 	DEATH,
 	DEPOSIT,
-	WITHDRAW
+	WITHDRAW,
+	EXIT
 };
 
 namespace Con {
-	string input(Event& eventOut);
+	string input(Action& eventOut);
 }
