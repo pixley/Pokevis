@@ -105,5 +105,5 @@ string caught(string species) {
 		cin >> nick;
 	}
 
-	return species + ' ' + lvl + ' ' + nick;
+	return species + ' ' + nick + ' ' + lvl;
 }

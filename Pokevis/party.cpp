@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "party.h"
+#include <iostream>
 
 Party::Party() {
-	Team.resize(6);
 }
 
 Party::Party(Poke* team[6]) {
@@ -12,14 +12,19 @@ Party::Party(Poke* team[6]) {
 }
 
 void Party::Display() {
-	for (unsigned int i = 0; i < 6 && Team[i] != NULL; i++) {
+	cout << "Team size is " << Team.size() << "\n";
+	for (unsigned int i = 0; i < Team.size(); i++) {
+		cout << "Displaying party member " << i << "\n";
 		Team[i]->Draw(i, Disp);
 	}
+
+	Disp.Push();
 }
 
 bool Party::Withdraw(Poke* mon) {
 	if (Team.size() < 6) {
 		Team.push_back(mon);
+		cout << mon->ToString() << "\n";
 		return true;
 	}
 	else {

@@ -58,13 +58,13 @@ bool Core::DexLoader() {
 	}
 
 	string line;
-	int i = 0;
+	unsigned int i = 1;
 	
 	//push all (species, num) pairs into the Dex vector
 	while (!dexFile.eof()) {
-		dexFile >> line;
-		i++;
+		getline(dexFile, line, '\n');
 		Dex.push_back(dex(line, i));
+		i += 1;
 	}
 
 	//sort the dex entries into alphabetical order for faster search
@@ -78,6 +78,7 @@ bool Core::LogSaver() {
 }
 
 unsigned int Core::NameToNum(string species) {
+	//cout << "Species to name conversion initiated.\n";
 	return binary_search(Dex, species);
 }
 
@@ -106,6 +107,7 @@ bool Core::Input() {
 	case CATCH:
 		PC.push_back(Poke(NameToNum(substr[0]), substr[1], atoi(substr[2].c_str())));
 		Team.Withdraw(&(PC.back()));
+		//cout << "Poke has been logged.\n";
 		break;
 	}
 	return true;
