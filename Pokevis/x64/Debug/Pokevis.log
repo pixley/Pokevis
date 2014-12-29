@@ -1,0 +1,34 @@
+﻿Build started 12/28/2014 7:24:45 PM.
+     1>Project "C:\Users\Tyler\Documents\GitHub\Pokevis\Pokevis\Pokevis.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Tyler\SFML-2.2\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"x64\Debug\Pokevis.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Tyler\SFML-2.2\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Debug\Pokevis.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt console.cpp core.cpp display.cpp party.cpp poke.cpp Pokevis.cpp ticker.cpp util.cpp
+         util.cpp
+         ticker.cpp
+         Pokevis.cpp
+         poke.cpp
+         party.cpp
+         display.cpp
+     1>display.cpp(35): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>display.cpp(36): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>display.cpp(37): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+         core.cpp
+         console.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tyler\Pokevis Build\Debug\Pokevis.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Tyler\SFML-2.2\lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "sfml-system.lib" "sfml-window.lib" "sfml-graphics.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Tyler\Pokevis Build\Debug\Pokevis.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Tyler\Pokevis Build\Debug\Pokevis.lib" /MACHINE:X64 x64\Debug\console.obj
+         x64\Debug\core.obj
+         x64\Debug\display.obj
+         x64\Debug\party.obj
+         x64\Debug\poke.obj
+         x64\Debug\Pokevis.obj
+         x64\Debug\stdafx.obj
+         x64\Debug\ticker.obj
+         x64\Debug\util.obj
+         Pokevis.vcxproj -> C:\Users\Tyler\Pokevis Build\Debug\Pokevis.exe
+     1>Done Building Project "C:\Users\Tyler\Documents\GitHub\Pokevis\Pokevis\Pokevis.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.75

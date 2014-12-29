@@ -17,69 +17,75 @@ void badSyntax() {
 	cin.clear();
 }
 
-string Con::input(Action& eventOut){
-	cout << ">";
-	cin.clear();
-	string instr;
-	getline(cin, instr);
-	cin.clear();
-
-	vector<string> substrs;
-	Util::strSplit(instr, substrs);
-
-	if (substrs[0] == "exit") {
-		eventOut = EXIT;
-		return "exiting";
-	}
-
-	else if (substrs.size() < 2) {
-		cout << substrs.size() << '\n';
+void Con::input(Action& eventOut, string& params, mutex& conLock){
+	while (true) {
+		cout << ">";
 		cin.clear();
+		string instr;
+		getline(cin, instr);
+		cin.clear();
+
+		vector<string> substrs;
+		Util::strSplit(instr, substrs);
+
+		conLock.lock();
+
+		if (substrs[0] == "exit") {
+			eventOut = EXIT;
+			params = "exiting";
+		}
+
+		else if (substrs.size() < 2) {
+			cout << substrs.size() << '\n';
+			cin.clear();
+			badSyntax();
+			eventOut = DEFAULT;
+			params = "bad cmd";
+		}
+
+		string& op = substrs[1];
+
+		if (op == "caught") {
+			eventOut = CATCH;
+			params = caught(substrs[0]);
+		}
+		/*
+		else if (op == "dinged") {
+		eventOut = DING;
+		params = dinged(substrs[0]);
+		}
+		else if (op == "evolved") {
+		if (substrs.size() < 4) {
 		badSyntax();
 		eventOut = DEFAULT;
 		return "bad cmd";
-	}
-
-	string& op = substrs[1];
-
-	if (op == "caught") {
-		eventOut = CATCH;
-		return caught(substrs[0]);
-	}
-	/*
-	else if (op == "dinged") {
-		eventOut = DING;
-		return dinged(substrs[0]);
-	}
-	else if (op == "evolved") {
-		if (substrs.size() < 4) {
-			badSyntax();
-			eventOut = DEFAULT;
-			return "bad cmd";
 		}
 		eventOut = EVOLVE;
-		return evolve(substrs[0], substrs[3]);
-	}
-	else if (op == "defeated") {
+		params = evolve(substrs[0], substrs[3]);
+		}
+		else if (op == "defeated") {
 		eventOut = VICTORY;
-		return victor(substrs[0]);
-	}
-	else if (op == "died") {
+		params = victor(substrs[0]);
+		}
+		else if (op == "died") {
 		eventOut = DEATH;
-		return death(substrs[0]);
-	}
-	else if (op == "deposited") {
+		params = death(substrs[0]);
+		}
+		else if (op == "deposited") {
 		eventOut = DEPOSIT;
-		return deposit(substrs[0]);
-	}
-	else if (op == "withdrawn") {
+		params = deposit(substrs[0]);
+		}
+		else if (op == "withdrawn") {
 		eventOut = WITHDRAW;
-		return wthdrw(substrs[0]);
-	}
-	*/
-	else {
-		eventOut = DEFAULT;
-		return "bad cmd";
+		params = wthdrw(substrs[0]);
+		}
+		*/
+		else {
+			eventOut = DEFAULT;
+			params = "bad cmd";
+		}
+
+		conLock.unlock();
 	}
 }
 

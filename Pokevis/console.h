@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <mutex>
 using namespace std;
 
 enum Action {
@@ -15,5 +16,5 @@ enum Action {
 };
 
 namespace Con {
-	string input(Action& eventOut);
+	void input(Action& eventOut, string& params, mutex& conLock);
 }

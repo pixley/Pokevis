@@ -44,6 +44,11 @@ int binary_search(const vector<dex>& sorted_vec, string key) {
 	return 0;
 }
 
+Core::Core() {
+	In = "N/A";
+	ActIn = DEFAULT;
+}
+
 bool Core::LogLoader() {
 	return true;
 }
@@ -54,6 +59,7 @@ bool Core::DexLoader() {
 
 	//the dexFile must open for functionality
 	if (dexFile.fail()) {
+		cout << "Dex file has failed to load.\n";
 		return false;
 	}
 
@@ -87,30 +93,37 @@ bool Core::Init() {
 }
 
 void Core::Loop() {
-	Display();
+	thread conThread(Con::input, ref(ActIn), ref(In), ref(ConLock));
 	while (Input()) {
 		Display();
 	}
 }
 
 bool Core::Input() {
-	Action act;
-	string input = Con::input(act);
-	vector<string> substr;
-	Util::strSplit(input, substr);
+	bool out = true;
+	if (ConLock.try_lock()) {
+		if (In != "N/A") {
+			vector<string> substr;
+			Util::strSplit(In, substr);
 
-	switch (act) {
-	case DEFAULT:
-		return true;
-	case EXIT:
-		return false;
-	case CATCH:
-		PC.push_back(Poke(NameToNum(substr[0]), substr[1], atoi(substr[2].c_str())));
-		Team.Withdraw(&(PC.back()));
-		//cout << "Poke has been logged.\n";
-		break;
+			switch (ActIn) {
+			case DEFAULT:
+				break;
+			case EXIT:
+				out = false;
+				break;
+			case CATCH:
+				PC.push_back(Poke(NameToNum(substr[0]), substr[1], atoi(substr[2].c_str())));
+				Team.Withdraw(&(PC.back()));
+				//cout << "Poke has been logged.\n";
+				break;
+			}
+
+			In = "N/A";
+		}
+		ConLock.unlock();
 	}
-	return true;
+	return out;
 }
 
 void Core::Display() {

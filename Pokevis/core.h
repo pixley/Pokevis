@@ -2,6 +2,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <thread>
+#include <mutex>
+#include <functional>
 #include "party.h"
 #include "ticker.h"
 #include "console.h"
@@ -25,6 +28,10 @@ private:
 	vector<dex> Dex;
 	Party Team;
 
+	mutex ConLock;
+	string In;
+	Action ActIn;
+
 	bool LogLoader();
 	bool DexLoader();
 	bool LogSaver();
@@ -35,6 +42,7 @@ private:
 
 	unsigned int NameToNum(string species);
 public:
+	Core();
 	bool Init();
 	void Loop();
 };

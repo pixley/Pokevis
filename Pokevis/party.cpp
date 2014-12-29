@@ -3,6 +3,7 @@
 #include <iostream>
 
 Party::Party() {
+	Team.reserve(6);
 }
 
 Party::Party(Poke* team[6]) {
@@ -12,7 +13,7 @@ Party::Party(Poke* team[6]) {
 }
 
 void Party::Display() {
-	cout << "Team size is " << Team.size() << "\n";
+	//cout << "Team size is " << Team.size() << "\n";
 	for (unsigned int i = 0; i < Team.size(); i++) {
 		cout << "Displaying party member " << i << "\n";
 		Team[i]->Draw(i, Disp);
@@ -24,7 +25,7 @@ void Party::Display() {
 bool Party::Withdraw(Poke* mon) {
 	if (Team.size() < 6) {
 		Team.push_back(mon);
-		cout << mon->ToString() << "\n";
+		//cout << mon->ToString() << "\n";
 		return true;
 	}
 	else {
