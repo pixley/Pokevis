@@ -5,9 +5,11 @@
 #include <thread>
 #include <mutex>
 #include <functional>
+#include <sstream>
 #include "party.h"
 #include "ticker.h"
 #include "console.h"
+#include "util.h"
 using namespace std;
 
 struct dex {
@@ -32,6 +34,11 @@ private:
 	string In;
 	Action ActIn;
 
+	Util::meCout Mecout;
+
+	Con console;
+	stringstream MessQueue;
+
 	bool LogLoader();
 	bool DexLoader();
 	bool LogSaver();
@@ -43,6 +50,7 @@ private:
 	unsigned int NameToNum(string species);
 public:
 	Core();
+	~Core();
 	bool Init();
 	void Loop();
 };

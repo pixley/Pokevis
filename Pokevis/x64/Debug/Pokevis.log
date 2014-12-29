@@ -1,4 +1,4 @@
-﻿Build started 12/28/2014 7:24:45 PM.
+﻿Build started 12/28/2014 11:21:05 PM.
      1>Project "C:\Users\Tyler\Documents\GitHub\Pokevis\Pokevis\Pokevis.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Tyler\SFML-2.2\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"x64\Debug\Pokevis.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt stdafx.cpp
@@ -10,9 +10,9 @@
          poke.cpp
          party.cpp
          display.cpp
-     1>display.cpp(35): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>display.cpp(36): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>display.cpp(37): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>display.cpp(43): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>display.cpp(44): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>display.cpp(45): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
          core.cpp
          console.cpp
          Generating Code...
@@ -31,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.75
+Time Elapsed 00:00:03.89

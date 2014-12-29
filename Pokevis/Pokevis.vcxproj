@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="..\..\..\..\Pokevis Build\dex.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +176,13 @@
     </ClCompile>
     <ClCompile Include="ticker.cpp" />
     <ClCompile Include="util.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Pokevis Build\B2 Bkg.png" />
+    <Image Include="..\..\..\..\Pokevis Build\Poke Sprites.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\..\..\..\Pokevis Build\consola.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

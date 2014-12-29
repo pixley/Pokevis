@@ -4,11 +4,13 @@
 using namespace sf;
 using namespace std;
 
-Displayer::Displayer() : Win(VideoMode(418, 726), "Pokevis Party", Style::Default) {
+Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(418, 726), "Pokevis Party", Style::None), Mecout(mecout) {
 	if (!Spritesheet.loadFromFile("Poke Sprites.png"))
-		cout << "Failed to load spritesheet.\n";
+		throw string("Failed to load spritesheet.\n");
 	if(!Consolas.loadFromFile("consola.ttf"))
-		cout << "Failed to load font.\n";
+		throw string("Failed to load font.\n");
+	if (!Background.loadFromFile("B2 Bkg.png"))
+		throw string("Failed to load background.\n");
 	NameSize = 48;
 	LvlSize = 30;
 	ImgDim = 96;
@@ -20,23 +22,29 @@ Displayer::~Displayer(){
 	Win.close();
 }
 
+void Displayer::DrawBkg() {
+	Sprite bkg(Background);
+
+	Win.draw(bkg);
+}
+
 void Displayer::Draw(unsigned int dexNum, string nick, unsigned int lvl, bool alive, unsigned int partyPos) {
 	unsigned int spriteRow = (dexNum - 1) / 31;
 	unsigned int spriteCol = (dexNum - 1) % 31;
 
-	cout << "Now in Draw method.\n";
+	//throw "Now in Draw method.\n";
 
 	Text* name = new Text(nick, Consolas, NameSize);
 	Text* level = new Text("Lvl: " + to_string(lvl), Consolas, LvlSize);
 	Sprite* icon = new Sprite(Spritesheet, IntRect(spriteCol * ImgDim, spriteRow * ImgDim, ImgDim, ImgDim));
 
-	cout << "Element positions being set.\n";
+	//throw "Element positions being set.\n";
 
 	icon->setPosition(0, ImgDim * partyPos);
 	name->setPosition(ImgDim, ImgDim * partyPos);
 	level->setPosition(ImgDim, ImgDim * partyPos + 56);
 
-	cout << "Colors being set.\n";
+	//throw "Colors being set.\n";
 
 	level->setColor(Color(127, 127, 127, 255));
 
@@ -45,7 +53,7 @@ void Displayer::Draw(unsigned int dexNum, string nick, unsigned int lvl, bool al
 		name->setColor(Color(190, 95, 95, 255));
 	}
 
-	cout << "Drawing elements.\n";
+	//throw "Drawing elements.\n";
 
 	Win.draw(*icon);
 	Win.draw(*name);
@@ -55,10 +63,10 @@ void Displayer::Draw(unsigned int dexNum, string nick, unsigned int lvl, bool al
 	delete name;
 	delete level;
 
-	cout << "Draw complete.\n";
+	//throw "Draw complete.\n";
 }
 
 void Displayer::Push() {
-	//cout << "Pushing frame.\n";
+	//throw "Pushing frame.\n";
 	Win.display();
 }

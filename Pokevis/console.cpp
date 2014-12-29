@@ -2,6 +2,7 @@
 #include <vector>
 #include "console.h"
 #include "util.h"
+#include <Windows.h>
 using namespace std;
 
 string caught(string species);
@@ -14,78 +15,103 @@ string caught(string species);
 
 void badSyntax() {
 	cout << "Bad command entered.  Please try again.\n";
-	cin.clear();
+	cin.ignore(100, '\n');
 }
 
-void Con::input(Action& eventOut, string& params, mutex& conLock){
+Con::Con(mutex& conLock) : ConLock(conLock) {
+}
+
+void Con::output(stringstream& messages) {
+	ConLock.lock();
+	cout << messages.str();
+	ConLock.unlock();
+}
+
+void Con::input(Action& eventOut, string& params){
 	while (true) {
+		ConLock.lock();
+
 		cout << ">";
-		cin.clear();
 		string instr;
 		getline(cin, instr);
-		cin.clear();
+
+		bool blank = false;
+
+		if (instr.size() == 0)
+			blank = true;
+
+		//cout << params;
 
 		vector<string> substrs;
 		Util::strSplit(instr, substrs);
 
-		conLock.lock();
+		if (blank) {
+			eventOut = DEFAULT;
+			params = "N/A";
+		}
 
-		if (substrs[0] == "exit") {
+		else if (substrs[0] == "exit") {
 			eventOut = EXIT;
 			params = "exiting";
 		}
 
 		else if (substrs.size() < 2) {
 			cout << substrs.size() << '\n';
-			cin.clear();
+			cin.ignore(100, '\n');
 			badSyntax();
 			eventOut = DEFAULT;
-			params = "bad cmd";
+			params = "N/A";
 		}
 
-		string& op = substrs[1];
-
-		if (op == "caught") {
-			eventOut = CATCH;
-			params = caught(substrs[0]);
-		}
-		/*
-		else if (op == "dinged") {
-		eventOut = DING;
-		params = dinged(substrs[0]);
-		}
-		else if (op == "evolved") {
-		if (substrs.size() < 4) {
-		badSyntax();
-		eventOut = DEFAULT;
-		return "bad cmd";
-		}
-		eventOut = EVOLVE;
-		params = evolve(substrs[0], substrs[3]);
-		}
-		else if (op == "defeated") {
-		eventOut = VICTORY;
-		params = victor(substrs[0]);
-		}
-		else if (op == "died") {
-		eventOut = DEATH;
-		params = death(substrs[0]);
-		}
-		else if (op == "deposited") {
-		eventOut = DEPOSIT;
-		params = deposit(substrs[0]);
-		}
-		else if (op == "withdrawn") {
-		eventOut = WITHDRAW;
-		params = wthdrw(substrs[0]);
-		}
-		*/
 		else {
+
+			string& op = substrs[1];
+
+			if (op == "caught") {
+				eventOut = CATCH;
+				params = caught(substrs[0]);
+			}
+			/*
+			else if (op == "dinged") {
+			eventOut = DING;
+			params = dinged(substrs[0]);
+			}
+			else if (op == "evolved") {
+			if (substrs.size() < 4) {
+			badSyntax();
 			eventOut = DEFAULT;
-			params = "bad cmd";
+			return "bad cmd";
+			}
+			eventOut = EVOLVE;
+			params = evolve(substrs[0], substrs[3]);
+			}
+			else if (op == "defeated") {
+			eventOut = VICTORY;
+			params = victor(substrs[0]);
+			}
+			else if (op == "died") {
+			eventOut = DEATH;
+			params = death(substrs[0]);
+			}
+			else if (op == "deposited") {
+			eventOut = DEPOSIT;
+			params = deposit(substrs[0]);
+			}
+			else if (op == "withdrawn") {
+			eventOut = WITHDRAW;
+			params = wthdrw(substrs[0]);
+			}
+			*/
+			else {
+				eventOut = DEFAULT;
+				params = "N/A";
+			}
+
 		}
 
-		conLock.unlock();
+		ConLock.unlock();
+
+		Sleep(1000);
 	}
 }
 
@@ -94,21 +120,21 @@ string caught(string species) {
 	string nick;
 
 	cout << "What level? ";
-	cin >> lvl;
+	getline(cin, lvl);
 
 	//atoi has overall undefined behavior when receiving bad input
 	//this solution may only work on Windows, MSFT's implementation returns 0
 	while (atoi(lvl.c_str()) < 1 || atoi(lvl.c_str()) > 100) {
 		cout << "A valid level has not been entered.  Please enter a value from 1 to 100. ";
-		cin >> lvl;
+		getline(cin, lvl);
 	}
 
 	cout << "What did you nickname it? ";
-	cin >> nick;
+	getline(cin, nick);
 
 	while (nick.length() < 1 || nick.length() > 12) {
-		cout << "Invalid nickname entered.  There is a 12-character mex.  Please try again. ";
-		cin >> nick;
+		cout << "Invalid nickname entered.  There is a 12-character max.  Please try again. ";
+		getline(cin, nick);
 	}
 
 	return species + ' ' + nick + ' ' + lvl;

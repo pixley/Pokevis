@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <mutex>
+#include <sstream>
+#include "util.h"
 using namespace std;
 
 enum Action {
@@ -15,6 +17,11 @@ enum Action {
 	EXIT
 };
 
-namespace Con {
-	void input(Action& eventOut, string& params, mutex& conLock);
-}
+class Con {
+private:
+	mutex& ConLock;
+public:
+	Con(mutex& conLock);
+	void input(Action& eventOut, string& params);
+	void output(stringstream& messages);
+};

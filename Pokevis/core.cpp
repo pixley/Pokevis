@@ -44,9 +44,12 @@ int binary_search(const vector<dex>& sorted_vec, string key) {
 	return 0;
 }
 
-Core::Core() {
+Core::Core() : Mecout(ConLock), console(ConLock), Team(Mecout) {
 	In = "N/A";
 	ActIn = DEFAULT;
+}
+
+Core::~Core() {
 }
 
 bool Core::LogLoader() {
@@ -59,7 +62,7 @@ bool Core::DexLoader() {
 
 	//the dexFile must open for functionality
 	if (dexFile.fail()) {
-		cout << "Dex file has failed to load.\n";
+		Mecout << "Dex file has failed to load.\n";
 		return false;
 	}
 
@@ -89,11 +92,12 @@ unsigned int Core::NameToNum(string species) {
 }
 
 bool Core::Init() {
-	return LogLoader() && DexLoader();
+	bool load = LogLoader() && DexLoader();
+	return load;
 }
 
 void Core::Loop() {
-	thread conThread(Con::input, ref(ActIn), ref(In), ref(ConLock));
+	thread conThread(&Con::input, ref(console), ref(ActIn), ref(In));
 	while (Input()) {
 		Display();
 	}
@@ -120,6 +124,7 @@ bool Core::Input() {
 			}
 
 			In = "N/A";
+			ActIn = DEFAULT;
 		}
 		ConLock.unlock();
 	}
@@ -127,5 +132,11 @@ bool Core::Input() {
 }
 
 void Core::Display() {
-	Team.Display();
+	try {
+		Team.Display();
+	}
+	catch (string e) {
+		MessQueue << e;
+		thread outThread(&Con::output, ref(console), ref(MessQueue));
+	}
 }

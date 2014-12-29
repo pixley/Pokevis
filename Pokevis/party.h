@@ -3,6 +3,7 @@
 #include <fstream>
 #include "poke.h"
 #include "display.h"
+#include "util.h"
 using namespace std;
 
 class Party{
@@ -11,9 +12,9 @@ private:
 	Displayer Disp;
 public:
 	//default constructor; forms empty party
-	Party();
+	Party(Util::meCout& mecout);
 	//constructor from log
-	Party(Poke* team[6]);
+	Party(Poke* team[6], Util::meCout& mecout);
 
 	//initializes the display
 	//bool DispInit();
