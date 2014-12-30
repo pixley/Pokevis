@@ -13,6 +13,7 @@ class Displayer {
 private:
 	Texture Spritesheet;
 	Texture Background;
+	Texture Ball;
 	Font Consolas;
 	RenderWindow Win;
 

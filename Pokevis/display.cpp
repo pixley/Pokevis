@@ -11,6 +11,8 @@ Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(418, 96 * 6), "Pokevi
 		throw string("Failed to load font.\n");
 	if (!Background.loadFromFile("B2 Bkg.png"))
 		throw string("Failed to load background.\n");
+	if (!Ball.loadFromFile("Ball.png"))
+		throw string("Failed to load ball image.\n");
 	NameSize = 48;
 	LvlSize = 30;
 	ImgDim = 96;
@@ -45,25 +47,29 @@ void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, 
 	Text* name = new Text(nick, Consolas, NameSize);
 	Text* level = new Text("Lvl: " + to_string(lvl), Consolas, LvlSize);
 	Sprite* icon = new Sprite(Spritesheet, IntRect(spriteCol * ImgDim + 7, spriteRow * ImgDim, ImgDim, ImgDim));
+	Sprite* ball = new Sprite(Ball);
 
 	//throw "Element positions being set.\n";
 
 	icon->setPosition(0, ImgDim * partyPos);
+	ball->setPosition(0, ImgDim * partyPos);
 	name->setPosition(ImgDim, ImgDim * partyPos);
 	level->setPosition(ImgDim, ImgDim * partyPos + 56);
 
 	//throw "Colors being set.\n";
 
 	level->setColor(Color(190, 190, 190, 255));
+	ball->setColor(Color(255, 255, 255, 127));
 
 	if (!alive) {
-		icon->setColor(Color(127, 127, 127, 255));
+		icon->setColor(Color(63, 63, 63, 255));
 		name->setColor(Color(190, 95, 95, 255));
 		level->setColor(Color(127, 127, 127, 255));
 	}
 
 	//throw "Drawing elements.\n";
 
+	Win.draw(*ball);
 	Win.draw(*icon);
 	Win.draw(*name);
 	Win.draw(*level);
@@ -71,6 +77,7 @@ void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, 
 	delete icon;
 	delete name;
 	delete level;
+	delete ball;
 
 	//throw "Draw complete.\n";
 }
