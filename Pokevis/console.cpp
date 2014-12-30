@@ -53,6 +53,8 @@ void Con::input(Action& eventOut, string& params){
 		else if (substrs[0] == "exit") {
 			eventOut = EXIT;
 			params = "exiting";
+			ConLock.unlock();
+			break;
 		}
 
 		else if (substrs.size() < 2) {
@@ -111,6 +113,7 @@ void Con::input(Action& eventOut, string& params){
 
 		ConLock.unlock();
 
+		//sleep for one second to allow main thread to access the new data
 		Sleep(1000);
 	}
 }

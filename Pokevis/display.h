@@ -27,7 +27,7 @@ public:
 	~Displayer();
 
 	void DrawBkg();
-	void Draw(unsigned int dexNum, string nick, unsigned int lvl, bool alive, unsigned int partyPos);
+	void Draw(unsigned int dexNum, const string& nick, unsigned int lvl, bool alive, unsigned int partyPos);
 	void Push();
 };
 

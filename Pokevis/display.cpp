@@ -4,7 +4,7 @@
 using namespace sf;
 using namespace std;
 
-Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(418, 726), "Pokevis Party", Style::None), Mecout(mecout) {
+Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(418, 726), "Pokevis Party", Style::Titlebar), Mecout(mecout) {
 	if (!Spritesheet.loadFromFile("Poke Sprites.png"))
 		throw string("Failed to load spritesheet.\n");
 	if(!Consolas.loadFromFile("consola.ttf"))
@@ -23,12 +23,18 @@ Displayer::~Displayer(){
 }
 
 void Displayer::DrawBkg() {
+	//this method is also used for the event loop, which is required, else the window
+	//becomes unresponsive; Pokevis doesn't use the window for any input
+	Event event;
+	while (Win.pollEvent(event)) {
+		//nothing here; just polling events
+	}
 	Sprite bkg(Background);
 
 	Win.draw(bkg);
 }
 
-void Displayer::Draw(unsigned int dexNum, string nick, unsigned int lvl, bool alive, unsigned int partyPos) {
+void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, bool alive, unsigned int partyPos) {
 	unsigned int spriteRow = (dexNum - 1) / 31;
 	unsigned int spriteCol = (dexNum - 1) % 31;
 
@@ -46,11 +52,12 @@ void Displayer::Draw(unsigned int dexNum, string nick, unsigned int lvl, bool al
 
 	//throw "Colors being set.\n";
 
-	level->setColor(Color(127, 127, 127, 255));
+	level->setColor(Color(190, 190, 190, 255));
 
 	if (!alive) {
 		icon->setColor(Color(127, 127, 127, 255));
 		name->setColor(Color(190, 95, 95, 255));
+		level->setColor(Color(127, 127, 127, 255));
 	}
 
 	//throw "Drawing elements.\n";

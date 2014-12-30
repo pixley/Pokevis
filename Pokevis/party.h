@@ -26,4 +26,7 @@ public:
 	bool Withdraw(Poke* mon);
 	//removes Poke from party, checks to ensure the Poke is present
 	bool Deposit(string nickname);
+
+	//spits out party's Pokes' ToString, separated by newlines
+	string ToString();
 };

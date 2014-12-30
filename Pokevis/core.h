@@ -48,6 +48,8 @@ private:
 	void Display();
 
 	unsigned int NameToNum(string species);
+
+	string PrintPC();
 public:
 	Core();
 	~Core();

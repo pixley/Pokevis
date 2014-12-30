@@ -28,13 +28,20 @@ void Party::Display() {
 }
 
 bool Party::Withdraw(Poke* mon) {
-	//cout << Team.size() << '\n';
 	if (Team.size() < 6) {
-		Team.push_back(mon);
-		//cout << mon->ToString() << "\n";
+		Team.emplace_back(mon);
 		return true;
 	}
 	else {
 		return false;
 	}
+	cout << "Team size is now " << Team.size() << '\n';
+}
+
+string Party::ToString() {
+	stringstream ss;
+	for (int i = 0; i < Team.size(); i++) {
+		ss << Team[i]->ToString() << "\n";
+	}
+	return ss.str();
 }

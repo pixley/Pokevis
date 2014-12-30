@@ -47,6 +47,8 @@ int binary_search(const vector<dex>& sorted_vec, string key) {
 Core::Core() : Mecout(ConLock), console(ConLock), Team(Mecout) {
 	In = "N/A";
 	ActIn = DEFAULT;
+
+	PC.reserve(100);
 }
 
 Core::~Core() {
@@ -72,7 +74,7 @@ bool Core::DexLoader() {
 	//push all (species, num) pairs into the Dex vector
 	while (!dexFile.eof()) {
 		getline(dexFile, line, '\n');
-		Dex.push_back(dex(line, i));
+		Dex.emplace_back(dex(line, i));
 		i += 1;
 	}
 
@@ -101,6 +103,7 @@ void Core::Loop() {
 	while (Input()) {
 		Display();
 	}
+	conThread.join();
 }
 
 bool Core::Input() {
@@ -117,9 +120,10 @@ bool Core::Input() {
 				out = false;
 				break;
 			case CATCH:
-				PC.push_back(Poke(NameToNum(substr[0]), substr[1], atoi(substr[2].c_str())));
+				PC.emplace_back(Poke(NameToNum(substr[0]), substr[1], atoi(substr[2].c_str())));
 				Team.Withdraw(&(PC.back()));
-				//cout << "Poke has been logged.\n";
+				cout << "Poke has been logged.\nNew party lineup:\n" << Team.ToString();
+				cout << "New PC lineup:\n" << PrintPC();
 				break;
 			}
 
@@ -139,4 +143,12 @@ void Core::Display() {
 		MessQueue << e;
 		thread outThread(&Con::output, ref(console), ref(MessQueue));
 	}
+}
+
+string Core::PrintPC() {
+	stringstream ss;
+	for (int i = 0; i < PC.size(); i++) {
+		ss << PC[i].ToString() << "\n";
+	}
+	return ss.str();
 }
