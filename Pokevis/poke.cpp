@@ -6,7 +6,7 @@ using namespace std;
 
 string Poke::ToString() {
 	stringstream stream;
-	stream << boolalpha << Nickname << ' ' << to_string(DexNum) << ' ' << to_string(Level) << ' ' << Alive << ' ' << Cause;
+	stream << boolalpha << Nickname << '\t' << to_string(DexNum) << '\t' << to_string(Level) << '\t' << Alive << '\t' << Cause;
 	return stream.str();
 }
 
@@ -20,7 +20,7 @@ Poke::Poke(unsigned int num, string name, unsigned int lvl) {
 
 Poke::Poke(string log) {
 	vector<string> info;
-	Util::strSplit(log, info);
+	Util::strSplit(log, info, '\t');
 
 	Nickname = info[0];
 	DexNum = atoi(info[1].c_str());

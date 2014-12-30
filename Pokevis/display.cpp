@@ -4,20 +4,20 @@
 using namespace sf;
 using namespace std;
 
-Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(418, 96 * 6), "Pokevis Party", Style::None), Mecout(mecout) {
+Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(1320, 96), "Pokevis Party", Style::None), Mecout(mecout) {
 	if (!Spritesheet.loadFromFile("Poke Sprites.png"))
 		throw string("Failed to load spritesheet.\n");
 	if(!Consolas.loadFromFile("consola.ttf"))
 		throw string("Failed to load font.\n");
-	if (!Background.loadFromFile("B2 Bkg.png"))
+	if (!Background.loadFromFile("Bkg.png"))
 		throw string("Failed to load background.\n");
 	if (!Ball.loadFromFile("Ball.png"))
 		throw string("Failed to load ball image.\n");
-	NameSize = 48;
-	LvlSize = 30;
+	NameSize = 18;
+	LvlSize = 14;
 	ImgDim = 96;
 
-	Win.setPosition(Vector2i(1920 - 418, 0));
+	Win.setPosition(Vector2i(1920 - 1320, 0));
 
 	Win.display();
 }
@@ -51,20 +51,24 @@ void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, 
 
 	//throw "Element positions being set.\n";
 
-	icon->setPosition(0, ImgDim * partyPos);
-	ball->setPosition(0, ImgDim * partyPos);
-	name->setPosition(ImgDim, ImgDim * partyPos);
-	level->setPosition(ImgDim, ImgDim * partyPos + 56);
+	unsigned int pokeWidth = ImgDim + 120;
+
+	icon->setPosition(pokeWidth * partyPos, 0);
+	ball->setPosition(pokeWidth * partyPos, 0);
+	name->setPosition(pokeWidth * partyPos + ImgDim, 25);
+	level->setPosition(pokeWidth * partyPos + ImgDim, 46);
 
 	//throw "Colors being set.\n";
 
-	level->setColor(Color(190, 190, 190, 255));
-	ball->setColor(Color(255, 255, 255, 127));
-
-	if (!alive) {
+	if (alive) {
+		level->setColor(Color(190, 190, 190, 255));
+		ball->setColor(Color(255, 255, 255, 127));
+	}
+	else {
 		icon->setColor(Color(63, 63, 63, 255));
 		name->setColor(Color(190, 95, 95, 255));
 		level->setColor(Color(127, 127, 127, 255));
+		ball->setColor(Color(255, 0, 0, 127));
 	}
 
 	//throw "Drawing elements.\n";

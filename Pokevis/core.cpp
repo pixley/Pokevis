@@ -55,6 +55,28 @@ Core::~Core() {
 }
 
 bool Core::LogLoader() {
+	fstream save("save.txt", ios_base::in);
+
+	if (!save.is_open())
+		return false;
+
+	string line;
+	getline(save, line);
+
+	if (line != "Party")
+		return false;
+
+	getline(save, line);
+	while (line != "PC") {
+		PC.emplace_back(Poke(line));
+		Team.Withdraw(&(PC.back()));
+		getline(save, line);
+	}
+
+	while (!save.eof()) {
+		getline(save, line);
+		PC.emplace_back(Poke(line));
+	}
 	return true;
 }
 
@@ -85,7 +107,23 @@ bool Core::DexLoader() {
 }
 
 bool Core::LogSaver() {
-	return false;
+	fstream save("save.txt", ios_base::trunc | ios_base::out);
+
+	if (!save.is_open())
+		return false;
+
+	save << "Party\n" << Team.ToString();
+
+	save << "PC";
+	for (int i = 0; i < PC.size(); i++) {
+		if (!Team.InParty(&(PC[i]))) {
+			save << '\n' << PC[i].ToString();
+		}
+	}
+
+	save.close();
+
+	return true;
 }
 
 unsigned int Core::NameToNum(string species) {
@@ -94,7 +132,13 @@ unsigned int Core::NameToNum(string species) {
 }
 
 bool Core::Init() {
-	bool load = LogLoader() && DexLoader();
+	if (!LogLoader()) {
+		cout << "No save data found.  Creating new run.  Good luck.\n";
+	}
+	else {
+		cout << "Save data found.  Welcome back and good luck.\n";
+	}
+	bool load = DexLoader();
 	return load;
 }
 
@@ -103,6 +147,8 @@ void Core::Loop() {
 	while (Input()) {
 		Display();
 	}
+
+	LogSaver();
 	conThread.join();
 }
 
@@ -111,7 +157,7 @@ bool Core::Input() {
 	if (ConLock.try_lock()) {
 		if (In != "N/A") {
 			vector<string> substr;
-			Util::strSplit(In, substr);
+			Util::strSplit(In, substr, '\t');
 
 			switch (ActIn) {
 			case DEFAULT:
@@ -122,8 +168,6 @@ bool Core::Input() {
 			case CATCH:
 				PC.emplace_back(Poke(NameToNum(substr[0]), substr[1], atoi(substr[2].c_str())));
 				Team.Withdraw(&(PC.back()));
-				cout << "Poke has been logged.\nNew party lineup:\n" << Team.ToString();
-				cout << "New PC lineup:\n" << PrintPC();
 				break;
 			case DING:
 				FindPoke(substr[0])->Ding();
@@ -134,7 +178,18 @@ bool Core::Input() {
 			case DEATH:
 				FindPoke(substr[0])->Kill("Because reasons.");
 				break;
+			case VICTORY:
+				break;
+			case DEPOSIT:
+				Team.Deposit(substr[0]);
+				break;
+			case WITHDRAW:
+				Team.Withdraw(FindPoke(substr[0]));
+				break;
 			}
+
+			cout << "New party lineup:\n" << Team.ToString();
+			cout << "New PC lineup:\n" << PrintPC();
 
 			In = "N/A";
 			ActIn = DEFAULT;

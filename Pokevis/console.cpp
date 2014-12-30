@@ -7,6 +7,7 @@ using namespace std;
 
 string caught(string species);
 string evolve(string nick, string species);
+string death(string nick);
 
 void badSyntax() {
 	cout << "Bad command entered.  Please try again.\n";
@@ -38,7 +39,7 @@ void Con::input(Action& eventOut, string& params){
 		//cout << params;
 
 		vector<string> substrs;
-		Util::strSplit(instr, substrs);
+		Util::strSplit(instr, substrs, ' ');
 
 		if (blank) {
 			eventOut = DEFAULT;
@@ -61,8 +62,20 @@ void Con::input(Action& eventOut, string& params){
 		}
 
 		else {
+			//account for nicknames with spaces in them
+			int off = 0;
+			for (int i = 1; i < substrs.size(); i++) {
+				if ((substrs[i] == "caught") || (substrs[i] == "dinged") || (substrs[i] == "evolved") ||
+					(substrs[i] == "defeated") || (substrs[i] == "died") || (substrs[i] == "deposited") ||
+					(substrs[i] == "withdrawn")) {
+					off = i;
+				}
+			}
+			for (int i = 1; i < off; i++) {
+				substrs[0] = substrs[0] + ' ' + substrs[i];
+			}
 
-			string& op = substrs[1];
+			string& op = substrs[off];
 
 			if (op == "caught") {
 				eventOut = CATCH;
@@ -79,28 +92,24 @@ void Con::input(Action& eventOut, string& params){
 				params = "bad cmd";
 				}
 			eventOut = EVOLVE;
-			params = substrs[0] + ' ' + substrs[3];
+			params = substrs[0] + '\t' + substrs[off + 2];
 			}
-			/*
 			else if (op == "defeated") {
 			eventOut = VICTORY;
-			params = victor(substrs[0]);
+			params = substrs[0];
 			}
-			*/
 			else if (op == "died") {
 			eventOut = DEATH;
 			params = substrs[0];
 			}
-			/*
 			else if (op == "deposited") {
 			eventOut = DEPOSIT;
-			params = deposit(substrs[0]);
+			params = substrs[0];
 			}
 			else if (op == "withdrawn") {
 			eventOut = WITHDRAW;
-			params = wthdrw(substrs[0]);
+			params = substrs[0];
 			}
-			*/
 			else {
 				eventOut = DEFAULT;
 				params = "N/A";
@@ -137,5 +146,14 @@ string caught(string species) {
 		getline(cin, nick);
 	}
 
-	return species + ' ' + nick + ' ' + lvl;
+	return species + '\t' + nick + '\t' + lvl;
+}
+
+string death(string nick) {
+	string cause;
+
+	cout << "To what did " << nick << " die? ";
+	getline(cin, cause);
+
+	return nick + '\t' + cause;
 }

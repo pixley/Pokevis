@@ -10,7 +10,7 @@ using namespace std;
 #define UTIL_H
 
 namespace Util {
-	void strSplit(string str, vector<string>& tokens);
+	void strSplit(string str, vector<string>& tokens, char delim);
 
 	class meCout {
 	private:

@@ -28,6 +28,9 @@ void Party::Display() {
 }
 
 bool Party::Withdraw(Poke* mon) {
+	if (InParty(mon)) {
+		return false;
+	}
 	if (Team.size() < 6) {
 		Team.emplace_back(mon);
 		return true;
@@ -35,7 +38,26 @@ bool Party::Withdraw(Poke* mon) {
 	else {
 		return false;
 	}
-	cout << "Team size is now " << Team.size() << '\n';
+	//cout << "Team size is now " << Team.size() << '\n';
+}
+
+bool Party::InParty(Poke* mon) {
+	for (int i = 0; i < Team.size(); i++) {
+		if (Team[i] == mon) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Party::Deposit(string nickname) {
+	for (int i = 0; i < Team.size(); i++) {
+		if (Team[i]->CheckNick(nickname)) {
+			Team.erase(Team.begin() + i);
+			return true;
+		}
+	}
+	return false;
 }
 
 string Party::ToString() {

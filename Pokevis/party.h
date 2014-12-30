@@ -29,4 +29,7 @@ public:
 
 	//spits out party's Pokes' ToString, separated by newlines
 	string ToString();
+
+	//checks whether the indicated Poke is in the party
+	bool InParty(Poke* mon);
 };

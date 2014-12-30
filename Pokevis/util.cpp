@@ -5,11 +5,11 @@
 #include <sstream>
 using namespace std;
 
-void Util::strSplit(string str, vector<string>& tokens) {
+void Util::strSplit(string str, vector<string>& tokens, char delim) {
 	string buf; // Have a buffer string
 	stringstream ss(str); // Insert the string into a stream
 
-	while (getline(ss, buf, ' '))
+	while (getline(ss, buf, delim))
 		tokens.push_back(buf);
 
 	return;
