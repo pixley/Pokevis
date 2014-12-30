@@ -56,3 +56,7 @@ void Poke::Evolve(unsigned int newNum) {
 void Poke::Draw(unsigned int partyPos, Displayer& disp) {
 	disp.Draw(DexNum, Nickname, Level, Alive, partyPos);
 }
+
+bool Poke::CheckNick(string nick) {
+	return nick == Nickname;
+}

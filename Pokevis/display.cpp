@@ -4,7 +4,7 @@
 using namespace sf;
 using namespace std;
 
-Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(418, 726), "Pokevis Party", Style::Titlebar), Mecout(mecout) {
+Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(418, 96 * 6), "Pokevis Party", Style::None), Mecout(mecout) {
 	if (!Spritesheet.loadFromFile("Poke Sprites.png"))
 		throw string("Failed to load spritesheet.\n");
 	if(!Consolas.loadFromFile("consola.ttf"))
@@ -14,6 +14,8 @@ Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(418, 726), "Pokevis P
 	NameSize = 48;
 	LvlSize = 30;
 	ImgDim = 96;
+
+	Win.setPosition(Vector2i(1920 - 418, 0));
 
 	Win.display();
 }
@@ -42,7 +44,7 @@ void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, 
 
 	Text* name = new Text(nick, Consolas, NameSize);
 	Text* level = new Text("Lvl: " + to_string(lvl), Consolas, LvlSize);
-	Sprite* icon = new Sprite(Spritesheet, IntRect(spriteCol * ImgDim, spriteRow * ImgDim, ImgDim, ImgDim));
+	Sprite* icon = new Sprite(Spritesheet, IntRect(spriteCol * ImgDim + 7, spriteRow * ImgDim, ImgDim, ImgDim));
 
 	//throw "Element positions being set.\n";
 

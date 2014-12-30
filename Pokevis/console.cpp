@@ -6,12 +6,7 @@
 using namespace std;
 
 string caught(string species);
-//string dinged(string nick);
-//string evolve(string nick, string species);
-//string victor(string name);
-//string death(string nick);
-//string deposit(string nick);
-//string wthdrw(string nick);
+string evolve(string nick, string species);
 
 void badSyntax() {
 	cout << "Bad command entered.  Please try again.\n";
@@ -73,28 +68,30 @@ void Con::input(Action& eventOut, string& params){
 				eventOut = CATCH;
 				params = caught(substrs[0]);
 			}
-			/*
 			else if (op == "dinged") {
 			eventOut = DING;
-			params = dinged(substrs[0]);
+			params = substrs[0];
 			}
 			else if (op == "evolved") {
 			if (substrs.size() < 4) {
-			badSyntax();
-			eventOut = DEFAULT;
-			return "bad cmd";
-			}
+				badSyntax();
+				eventOut = DEFAULT;
+				params = "bad cmd";
+				}
 			eventOut = EVOLVE;
-			params = evolve(substrs[0], substrs[3]);
+			params = substrs[0] + ' ' + substrs[3];
 			}
+			/*
 			else if (op == "defeated") {
 			eventOut = VICTORY;
 			params = victor(substrs[0]);
 			}
+			*/
 			else if (op == "died") {
 			eventOut = DEATH;
-			params = death(substrs[0]);
+			params = substrs[0];
 			}
+			/*
 			else if (op == "deposited") {
 			eventOut = DEPOSIT;
 			params = deposit(substrs[0]);

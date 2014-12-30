@@ -50,6 +50,8 @@ private:
 	unsigned int NameToNum(string species);
 
 	string PrintPC();
+
+	Poke* FindPoke(string nick);
 public:
 	Core();
 	~Core();

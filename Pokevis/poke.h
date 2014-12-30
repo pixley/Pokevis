@@ -30,4 +30,6 @@ public:
 
 	//initiates drawing of Poke status to screen
 	void Draw(unsigned int partyPos, Displayer& disp);
+
+	bool CheckNick(string nick);
 };

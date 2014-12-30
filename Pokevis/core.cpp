@@ -125,6 +125,15 @@ bool Core::Input() {
 				cout << "Poke has been logged.\nNew party lineup:\n" << Team.ToString();
 				cout << "New PC lineup:\n" << PrintPC();
 				break;
+			case DING:
+				FindPoke(substr[0])->Ding();
+				break;
+			case EVOLVE:
+				FindPoke(substr[0])->Evolve(NameToNum(substr[1]));
+				break;
+			case DEATH:
+				FindPoke(substr[0])->Kill("Because reasons.");
+				break;
 			}
 
 			In = "N/A";
@@ -151,4 +160,13 @@ string Core::PrintPC() {
 		ss << PC[i].ToString() << "\n";
 	}
 	return ss.str();
+}
+
+Poke* Core::FindPoke(string nick) {
+	for (int i = 0; i < PC.size(); i++) {
+		if (PC[i].CheckNick(nick)) {
+			return &(PC[i]);
+		}
+	}
+	return NULL;
 }
