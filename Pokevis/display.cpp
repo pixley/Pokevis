@@ -4,7 +4,7 @@
 using namespace sf;
 using namespace std;
 
-Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(1320, 96), "Pokevis Party", Style::None), Mecout(mecout) {
+Displayer::Displayer(Util::meCout& mecout, RenderWindow& win) : Win(win), Mecout(mecout) {
 	if (!Spritesheet.loadFromFile("Poke Sprites.png"))
 		throw string("Failed to load spritesheet.\n");
 	if(!Consolas.loadFromFile("consola.ttf"))
@@ -13,13 +13,9 @@ Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(1320, 96), "Pokevis P
 		throw string("Failed to load background.\n");
 	if (!Ball.loadFromFile("Ball.png"))
 		throw string("Failed to load ball image.\n");
-	NameSize = 20;
-	LvlSize = 20;
+	NameSize = 32;
+	LvlSize = 26;
 	ImgDim = 96;
-
-	Win.setPosition(Vector2i(1920 - 1320, 0));
-
-	Win.display();
 }
 
 Displayer::~Displayer(){
@@ -51,11 +47,11 @@ void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, 
 
 	//throw "Element positions being set.\n";
 
-	unsigned int pokeWidth = ImgDim + 120;
+	unsigned int pokeWidth = ImgDim + 220;
 
 	icon->setPosition(pokeWidth * partyPos, 0);
 	ball->setPosition(pokeWidth * partyPos, 0);
-	name->setPosition(pokeWidth * partyPos + ImgDim, 25);
+	name->setPosition(pokeWidth * partyPos + ImgDim, 10);
 	level->setPosition(pokeWidth * partyPos + ImgDim, 46);
 
 	//throw "Colors being set.\n";
@@ -84,9 +80,4 @@ void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, 
 	delete ball;
 
 	//throw "Draw complete.\n";
-}
-
-void Displayer::Push() {
-	//throw "Pushing frame.\n";
-	Win.display();
 }

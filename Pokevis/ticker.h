@@ -12,14 +12,16 @@ using namespace std;
 class Ticker {
 private:
 	unsigned int FontSize;
-	RenderWindow Win;
+	RenderWindow& Win;
 	Texture BkgTex;
 	Sprite Background;
+	Texture LogoTex;
+	Sprite Logo;
 	Font Consolas;
 	vector<string> Events;
 
 public:
-	Ticker();
+	Ticker(RenderWindow& win);
 	~Ticker();
 	void AddEvent(string* act);
 	static void AddEvent(string* act, Ticker& t);

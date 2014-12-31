@@ -2,21 +2,21 @@
 #include "ticker.h"
 #include <algorithm>
 
-Ticker::Ticker() : Win(VideoMode(600, 648), "Pokevis Ticker", Style::None) {
+Ticker::Ticker(RenderWindow& win) : Win(win) {
 	if (!BkgTex.loadFromFile("Ticker Bkg.png"))
 		throw string("Failed to load ticker background.\n");
 	if (!Consolas.loadFromFile("consola.ttf"))
 		throw string("Failed to load font.\n");
+	if (!LogoTex.loadFromFile("Logo.png"))
+		throw string("Failed to load Logo\n");
 
 	FontSize = 16;
 
-	Win.setPosition(Vector2i(1320, 96));
-
 	Background.setTexture(BkgTex);
+	Background.setPosition(1320, 96);
 
-	Win.draw(Background);
-
-	Win.display();
+	Logo.setTexture(LogoTex);
+	Logo.setPosition(1320, 96);
 }
 
 void Ticker::LoadLog(string log){
@@ -82,16 +82,14 @@ void Ticker::Display() {
 
 	//draw the background
 	Win.draw(Background);
+	Win.draw(Logo);
 
-	//draw the 40 most recent event strings
-	for (int i = 1; (i < 41) && ((int)(Events.size() - i) >= 0); i++) {
+	//draw the 24 most recent event strings
+	for (int i = 1; (i < 25) && ((int)(Events.size() - i) >= 0); i++) {
 		Text act(Events[Events.size() - i], Consolas, FontSize);
-		act.setPosition(5, (FontSize) * (i - 1) + 5);
+		act.setPosition(1325, (FontSize) * (i - 1) + 266);
 		Win.draw(act);
 	}
-
-	//push everything
-	Win.display();
 }
 
 string Ticker::ToString() {

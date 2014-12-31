@@ -15,7 +15,7 @@ private:
 	Texture Background;
 	Texture Ball;
 	Font Consolas;
-	RenderWindow Win;
+	RenderWindow& Win;
 
 	Util::meCout& Mecout;
 
@@ -24,7 +24,7 @@ private:
 	unsigned int ImgDim;
 
 public:
-	Displayer(Util::meCout& mecout);
+	Displayer(Util::meCout& mecout, RenderWindow& win);
 	~Displayer();
 
 	void DrawBkg();

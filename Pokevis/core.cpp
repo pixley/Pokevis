@@ -44,11 +44,14 @@ int binary_search(const vector<dex>& sorted_vec, string key) {
 	return 0;
 }
 
-Core::Core() : Mecout(ConLock), console(ConLock), Team(Mecout) {
+Core::Core() : Mecout(ConLock), console(ConLock),
+Win(VideoMode(1920, 96 + 648), "Pokevis Display", Style::None), ticker(Win), Team(Mecout, Win) {
 	In = "N/A";
 	ActIn = DEFAULT;
 
 	PC.reserve(100);
+
+	Win.setPosition(Vector2i(0, 0));
 }
 
 Core::~Core() {
@@ -182,6 +185,7 @@ void Core::Loop() {
 bool Core::Input() {
 	bool out = true;
 	string act;
+	Poke* subject;
 	if (ConLock.try_lock()) {
 		if (In != "N/A") {
 			vector<string> substr;
@@ -200,16 +204,25 @@ bool Core::Input() {
 				act = "Caught a level " + substr[2] + " " + substr[0] + " named " + substr[1] + ".";
 				break;
 			case DING:
-				FindPoke(substr[0])->Ding();
-				act = substr[0] + " leveled up!";
+				subject = FindPoke(substr[0]);
+				if (subject) {
+					subject->Ding();
+					act = substr[0] + " leveled up!";
+				}
 				break;
 			case EVOLVE:
-				FindPoke(substr[0])->Evolve(NameToNum(substr[1]));
-				act = substr[0] + " evolved into " + substr[1] + "!";
+				subject = FindPoke(substr[0]);
+				if (subject) {
+					subject->Evolve(NameToNum(substr[1]));
+					act = substr[0] + " evolved into " + substr[1] + "!";
+				}
 				break;
 			case DEATH:
-				FindPoke(substr[0])->Kill(substr[1]);
-				act = substr[0] + " died to " + substr[1] + ".";
+				subject = FindPoke(substr[0]);
+				if (subject) {
+					subject->Kill(substr[1]);
+					act = substr[0] + " died to " + substr[1] + ".";
+				}
 				break;
 			case VICTORY:
 				act = substr[0] + " was defeated!";
@@ -241,6 +254,7 @@ void Core::Display() {
 	try {
 		Team.Display();
 		ticker.Display();
+		Win.display();
 	}
 	catch (string e) {
 		MessQueue << e;

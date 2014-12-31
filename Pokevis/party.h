@@ -12,7 +12,7 @@ private:
 	Displayer Disp;
 public:
 	//default constructor; forms empty party
-	Party(Util::meCout& mecout);
+	Party(Util::meCout& mecout, RenderWindow& win);
 
 	//initializes the display
 	//bool DispInit();

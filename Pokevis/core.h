@@ -1,3 +1,6 @@
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -40,6 +43,8 @@ private:
 	stringstream MessQueue;
 
 	Ticker ticker;
+
+	RenderWindow Win;
 
 	bool LogLoader();
 	bool DexLoader();

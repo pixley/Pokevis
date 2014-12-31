@@ -2,7 +2,7 @@
 #include "party.h"
 #include <iostream>
 
-Party::Party(Util::meCout& mecout) : Team(), Disp(mecout) {
+Party::Party(Util::meCout& mecout, RenderWindow& win) : Team(), Disp(mecout, win) {
 }
 
 void Party::Display() {
@@ -17,11 +17,12 @@ void Party::Display() {
 		//cout << "Displaying party member " << i << "\n";
 		Team[i]->Draw(i, Disp);
 	}
-
-	Disp.Push();
 }
 
 bool Party::Withdraw(Poke* mon) {
+	if (!mon) {
+		return false;
+	}
 	if (InParty(mon)) {
 		return false;
 	}
