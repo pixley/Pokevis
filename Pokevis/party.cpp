@@ -62,3 +62,19 @@ string Party::ToString() {
 	}
 	return ss.str();
 }
+
+bool Party::HatchEgg(unsigned int num, string name) {
+	Poke* hatcher = NULL;
+	for (int i = 0; i < Team.size(); i++) {
+		if (Team[i]->CheckNick("Egg")) {
+			hatcher = Team[i];
+		}
+	}
+	if (hatcher == NULL) {
+		return false;
+	}
+	else {
+		hatcher->Hatch(num, name);
+		return true;
+	}
+}

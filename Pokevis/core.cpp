@@ -235,6 +235,16 @@ bool Core::Input() {
 				if (Team.Withdraw(FindPoke(substr[0])))
 					act = substr[0] + " has been withdrawn.";
 				break;
+			case EGG:
+				PC.emplace_back(Poke(650, "Egg", 0));
+				Team.Withdraw(&(PC.back()));
+				act = "Received an egg!";
+				break;
+			case HATCH:
+				if (Team.HatchEgg(NameToNum(substr[0]), substr[1])) {
+					act = "Egg hatched into " + substr[0] + "!  Nickname is " + substr[1] + "!";
+				}
+				break;
 			}
 
 			//cout << "New party lineup:\n" << Team.ToString();

@@ -30,4 +30,6 @@ public:
 
 	//checks whether the indicated Poke is in the party
 	bool InParty(Poke* mon);
+
+	bool HatchEgg(unsigned int num, string name);
 };

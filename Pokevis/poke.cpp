@@ -60,3 +60,9 @@ void Poke::Draw(unsigned int partyPos, Displayer& disp) {
 bool Poke::CheckNick(string nick) {
 	return nick == Nickname;
 }
+
+void Poke::Hatch(unsigned int num, string name) {
+	Nickname = name;
+	DexNum = num;
+	Level = 1;
+}

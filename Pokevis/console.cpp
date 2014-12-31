@@ -8,6 +8,7 @@ using namespace std;
 string caught(string species);
 string evolve(string nick, string species);
 string death(string nick);
+string hatch();
 
 void badSyntax() {
 	cout << "Bad command entered.  Please try again.\n";
@@ -67,7 +68,7 @@ void Con::input(Action& eventOut, string& params){
 			for (int i = 1; i < substrs.size(); i++) {
 				if ((substrs[i] == "caught") || (substrs[i] == "dinged") || (substrs[i] == "evolved") ||
 					(substrs[i] == "defeated") || (substrs[i] == "died") || (substrs[i] == "deposited") ||
-					(substrs[i] == "withdrawn")) {
+					(substrs[i] == "withdrawn") || (substrs[i] == "obtained") || (substrs[i] == "hatched")){
 					off = i;
 				}
 			}
@@ -109,6 +110,14 @@ void Con::input(Action& eventOut, string& params){
 			else if (op == "withdrawn") {
 			eventOut = WITHDRAW;
 			params = substrs[0];
+			}
+			else if (op == "obtained" && substrs[0] == "Egg") {
+				eventOut = EGG;
+				params = "Egg";
+			}
+			else if (op == "hatched" && substrs[0] == "Egg") {
+				eventOut = HATCH;
+				params = hatch();
 			}
 			else {
 				eventOut = DEFAULT;
@@ -156,4 +165,16 @@ string death(string nick) {
 	getline(cin, cause);
 
 	return nick + '\t' + cause;
+}
+
+string hatch() {
+	string species;
+	string nick;
+
+	cout << "What hatched from the egg? ";
+	getline(cin, species);
+	cout << "What did you nickname it? ";
+	getline(cin, nick);
+
+	return species + '\t' + nick;
 }

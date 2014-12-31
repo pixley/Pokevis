@@ -32,4 +32,6 @@ public:
 	void Draw(unsigned int partyPos, Displayer& disp);
 
 	bool CheckNick(string nick);
+
+	void Hatch(unsigned int num, string name);
 };

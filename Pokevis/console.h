@@ -14,6 +14,8 @@ enum Action {
 	DEATH,
 	DEPOSIT,
 	WITHDRAW,
+	EGG,
+	HATCH,
 	EXIT
 };
 

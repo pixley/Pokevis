@@ -72,7 +72,8 @@ void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, 
 	Win.draw(*ball);
 	Win.draw(*icon);
 	Win.draw(*name);
-	Win.draw(*level);
+	if (lvl > 0)
+		Win.draw(*level);
 
 	delete icon;
 	delete name;
