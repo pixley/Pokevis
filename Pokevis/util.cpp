@@ -10,7 +10,7 @@ void Util::strSplit(string str, vector<string>& tokens, char delim) {
 	stringstream ss(str); // Insert the string into a stream
 
 	while (getline(ss, buf, delim))
-		tokens.push_back(buf);
+		tokens.emplace_back(buf);
 
 	return;
 }

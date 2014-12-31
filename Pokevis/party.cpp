@@ -5,12 +5,6 @@
 Party::Party(Util::meCout& mecout) : Team(), Disp(mecout) {
 }
 
-Party::Party(Poke* team[6], Util::meCout& mecout) : Team(), Disp(mecout) {
-	for (unsigned int i = 0; i < 6; i++) {
-		Team.push_back(team[i]);
-	}
-}
-
 void Party::Display() {
 	//cout << "Team size is " << Team.size() << "\n";
 	Disp.DrawBkg();

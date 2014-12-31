@@ -39,6 +39,8 @@ private:
 	Con console;
 	stringstream MessQueue;
 
+	Ticker ticker;
+
 	bool LogLoader();
 	bool DexLoader();
 	bool LogSaver();
@@ -55,6 +57,6 @@ private:
 public:
 	Core();
 	~Core();
-	bool Init();
+	__declspec(noinline) bool Init();
 	void Loop();
 };

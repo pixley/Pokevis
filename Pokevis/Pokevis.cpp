@@ -7,9 +7,9 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	Core core;
-	if (core.Init()){
-		core.Loop();
+	Core* core = new Core();
+	if (core->Init()){
+		core->Loop();
 	}
 
 	return 0;

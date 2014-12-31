@@ -13,8 +13,6 @@ private:
 public:
 	//default constructor; forms empty party
 	Party(Util::meCout& mecout);
-	//constructor from log
-	Party(Poke* team[6], Util::meCout& mecout);
 
 	//initializes the display
 	//bool DispInit();

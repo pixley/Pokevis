@@ -55,10 +55,12 @@ Core::~Core() {
 }
 
 bool Core::LogLoader() {
-	fstream save("save.txt", ios_base::in);
+	ifstream save("save.txt");
 
-	if (!save.is_open())
+	if (!save.is_open()) {
+		cout << "Just checking that there isn't a file!\n";
 		return false;
+	}
 
 	string line;
 	getline(save, line);
@@ -73,10 +75,25 @@ bool Core::LogLoader() {
 		getline(save, line);
 	}
 
-	while (!save.eof()) {
-		getline(save, line);
+	getline(save, line);
+	while (line != "Events" && !save.eof()) {
 		PC.emplace_back(Poke(line));
+		getline(save, line);
 	}
+
+	if (save.eof()) {
+		string begin("Game begun!");
+		ticker.AddEvent(&begin);
+		return true;
+	}
+
+	string act;
+	stringstream acts;
+	while (!save.eof()) {
+		getline(save, act);
+		acts << act << '\n';
+	}
+	ticker.LoadLog(acts.str());
 	return true;
 }
 
@@ -121,6 +138,9 @@ bool Core::LogSaver() {
 		}
 	}
 
+	save << "\nEvents\n";
+	save << ticker.ToString();
+
 	save.close();
 
 	return true;
@@ -131,12 +151,19 @@ unsigned int Core::NameToNum(string species) {
 	return binary_search(Dex, species);
 }
 
-bool Core::Init() {
+__declspec(noinline) bool Core::Init() {
+	cout << "Welcome to Pokevis, a Nuzlocke stream visualizer tool.\n";
+
+	string loaded("Game resumed!");
+	string begin("Game begun!");
+
 	if (!LogLoader()) {
 		cout << "No save data found.  Creating new run.  Good luck.\n";
+		ticker.AddEvent(&begin);
 	}
 	else {
-		cout << "Save data found.  Welcome back and good luck.\n";
+		cout << "Save data loaded.  Welcome back and good luck.\n";
+		ticker.AddEvent(&loaded);
 	}
 	bool load = DexLoader();
 	return load;
@@ -154,6 +181,7 @@ void Core::Loop() {
 
 bool Core::Input() {
 	bool out = true;
+	string act;
 	if (ConLock.try_lock()) {
 		if (In != "N/A") {
 			vector<string> substr;
@@ -164,37 +192,47 @@ bool Core::Input() {
 				break;
 			case EXIT:
 				out = false;
+				act = "Session ended.";
 				break;
 			case CATCH:
 				PC.emplace_back(Poke(NameToNum(substr[0]), substr[1], atoi(substr[2].c_str())));
-				Team.Withdraw(&(PC.back()));
+				if(Team.Withdraw(&(PC.back())))
+					act = "Caught a level " + substr[2] + " " + substr[0] + " named " + substr[1] + ".";
 				break;
 			case DING:
 				FindPoke(substr[0])->Ding();
+				act = substr[0] + " leveled up!";
 				break;
 			case EVOLVE:
 				FindPoke(substr[0])->Evolve(NameToNum(substr[1]));
+				act = substr[0] + " evolved into " + substr[1] + "!";
 				break;
 			case DEATH:
-				FindPoke(substr[0])->Kill("Because reasons.");
+				FindPoke(substr[0])->Kill(substr[1]);
+				act = substr[0] + " died to " + substr[1] + ".";
 				break;
 			case VICTORY:
+				act = substr[0] + " was defeated!";
 				break;
 			case DEPOSIT:
-				Team.Deposit(substr[0]);
+				if (Team.Deposit(substr[0]))
+					act = substr[0] + " has been deposited.";
 				break;
 			case WITHDRAW:
-				Team.Withdraw(FindPoke(substr[0]));
+				if (Team.Withdraw(FindPoke(substr[0])))
+					act = substr[0] + " has been withdrawn.";
 				break;
 			}
 
-			cout << "New party lineup:\n" << Team.ToString();
-			cout << "New PC lineup:\n" << PrintPC();
+			//cout << "New party lineup:\n" << Team.ToString();
+			//cout << "New PC lineup:\n" << PrintPC();
 
 			In = "N/A";
 			ActIn = DEFAULT;
 		}
 		ConLock.unlock();
+		if (act.length() > 0)
+			ticker.AddEvent(&act);
 	}
 	return out;
 }
@@ -202,6 +240,7 @@ bool Core::Input() {
 void Core::Display() {
 	try {
 		Team.Display();
+		ticker.Display();
 	}
 	catch (string e) {
 		MessQueue << e;

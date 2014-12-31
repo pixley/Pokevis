@@ -100,7 +100,7 @@ void Con::input(Action& eventOut, string& params){
 			}
 			else if (op == "died") {
 			eventOut = DEATH;
-			params = substrs[0];
+			params = death(substrs[0]);
 			}
 			else if (op == "deposited") {
 			eventOut = DEPOSIT;
