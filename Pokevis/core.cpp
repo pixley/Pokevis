@@ -2,6 +2,8 @@
 #include "core.h"
 #include "util.h"
 #include <algorithm>
+#include <Windows.h>
+#include <WinUser.h>
 using namespace std;
 
 dex::dex(string spec, int no) {
@@ -52,6 +54,8 @@ Win(VideoMode(1920, 96 + 648), "Pokevis Display", Style::None), ticker(Win), Tea
 	PC.reserve(100);
 
 	Win.setPosition(Vector2i(0, 0));
+
+	Win.display();
 }
 
 Core::~Core() {
@@ -174,6 +178,7 @@ __declspec(noinline) bool Core::Init() {
 
 void Core::Loop() {
 	thread conThread(&Con::input, ref(console), ref(ActIn), ref(In));
+	SetForegroundWindow(GetConsoleWindow());
 	while (Input()) {
 		Display();
 	}
