@@ -1,9 +1,8 @@
-﻿Build started 12/30/2014 10:11:15 PM.
+﻿Build started 12/30/2014 11:14:07 PM.
      1>Project "C:\Users\Tyler\Documents\GitHub\Pokevis\Pokevis\Pokevis.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Tyler\SFML-2.2\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Release\Pokevis.pch" /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt ticker.cpp
-         ticker.cpp
-     1>ticker.cpp(89): warning C4244: 'argument' : conversion from 'unsigned int' to 'float', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Tyler\SFML-2.2\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"x64\Release\Pokevis.pch" /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt core.cpp
+         core.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tyler\Pokevis Build\Pokevis.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\Tyler\SFML-2.2\lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "sfml-system.lib" "sfml-window.lib" "sfml-graphics.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Tyler\Pokevis Build\Pokevis.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Tyler\Pokevis Build\Pokevis.lib" /MACHINE:X64 x64\Release\console.obj
          x64\Release\core.obj
@@ -21,4 +20,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.00
+Time Elapsed 00:00:01.68

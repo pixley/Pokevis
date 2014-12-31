@@ -196,8 +196,8 @@ bool Core::Input() {
 				break;
 			case CATCH:
 				PC.emplace_back(Poke(NameToNum(substr[0]), substr[1], atoi(substr[2].c_str())));
-				if(Team.Withdraw(&(PC.back())))
-					act = "Caught a level " + substr[2] + " " + substr[0] + " named " + substr[1] + ".";
+				Team.Withdraw(&(PC.back()));
+				act = "Caught a level " + substr[2] + " " + substr[0] + " named " + substr[1] + ".";
 				break;
 			case DING:
 				FindPoke(substr[0])->Ding();

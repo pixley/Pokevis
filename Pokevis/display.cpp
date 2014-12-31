@@ -13,8 +13,8 @@ Displayer::Displayer(Util::meCout& mecout) : Win(VideoMode(1320, 96), "Pokevis P
 		throw string("Failed to load background.\n");
 	if (!Ball.loadFromFile("Ball.png"))
 		throw string("Failed to load ball image.\n");
-	NameSize = 18;
-	LvlSize = 14;
+	NameSize = 20;
+	LvlSize = 20;
 	ImgDim = 96;
 
 	Win.setPosition(Vector2i(1920 - 1320, 0));
