@@ -72,6 +72,8 @@ Choosing a save file may be implemented in a future version.
   * Maybe if I can get SFML to do that.  I dunno.
 * Support for any Pokémon spritesheet other than the one with which it comes
   * Another instance of hardcoding.  It'd be a lot of work to give better support.
+* Support for genders
+  * Not super important to me due to the following item
 * Support for alternate forms
   * Hand-coding the rules for alternate forms does not sound like my idea of fun.
 * Rules on evolution (any Pokémon can evolve into any other at any time; you are responsible for keeping things accurate)
