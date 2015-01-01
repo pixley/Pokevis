@@ -41,7 +41,7 @@ With each console command, the event log, which is on the right side of the wind
 
 In addition to the console commands for the Data Logger, there is also a milestone victory command: `[person/legendary] defeated`.  While this, of course, doesn't affect the Party Display, I do feel it is important to show these kinds of victories.
 
-Like the Party Display, the Event Display's background can be changed.  Just provide your own 600 x 538 PNG.  It also features a 600 x 165 space for a custom logo for the run.  This covers the upper part of the background, so you'll want to make a logo surrounded by transparency.
+Like the Party Display, the Event Display's background can be changed.  Just provide your own 600 x 548 PNG.  It also features a 600 x 165 space for a custom logo for the run.  This covers the upper part of the background, so you'll want to make a logo surrounded by transparency.
 
 ###Data Save and Load
 
@@ -88,6 +88,8 @@ Choosing a save file may be implemented in a future version.
   * I mean, you can go ahead and put your own font in the folder and rename the file "consola" if you want, but I built Pokevis with a single-width font in mind.  Maybe it's because I'm a programmer, but I like single-width fonts.  Expecially Consolas.
 * Support for separation of the Party and Event Displays in Open Broadcaster Software.
   * In addition to the reasons listed for having Party and Event rendered in the same window, OBS also does not like accepting two separate captures from the same game.  I dunno.
+* Support for daycare
+  * Not using it for my Nuzlocke.  May implement if there is demand.  Super simple, just didn't feel like it.
 
 ##Final thoughts
 
