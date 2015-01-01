@@ -33,15 +33,13 @@ Shows the status of each member of your party.  This will show as a banner acros
 * Level
 * Color change upon death
 
-The background of the Party display can be changed.  Replace Bkg.png with your own 1920 x 96 PNG.  Just be aware of the font colors.
-
 ###Event display
 
 With each console command, the event log, which is on the right side of the window, updates, showing what happens moment-to-moment.  Each event is timestamped, so that your viewers can see how things are coming along.
 
 In addition to the console commands for the Data Logger, there is also a milestone victory command: `[person/legendary] defeated`.  While this, of course, doesn't affect the Party Display, I do feel it is important to show these kinds of victories.
 
-Like the Party Display, the Event Display's background can be changed.  Just provide your own 600 x 548 PNG.  It also features a 600 x 165 space for a custom logo for the run.  This covers the upper part of the background, so you'll want to make a logo surrounded by transparency.
+The Event Display provides room for a 600 x 165 logo, which you can customize by replacing Logo.png.
 
 ###Data Save and Load
 
@@ -52,6 +50,12 @@ But what if you want to do more than one run?  Perhaps you want to save your old
 Choosing a save file may be implemented in a future version.
 
 **Important:** Unless you want to lose data, do not click the close button on the console.  That will end Pokevis right where it is, and thus not give it the opportunity to save your data.
+
+###Customizable background
+
+Pokevis reads in a 1920 x 1080 PNG (Bkg.png) that serves as the background for the two displays and the game itself.  The provided background leaves space for the game to be chromakeyed in via OBS.  However, this functionality is not yet available in OBS (coming in the rewrite), so Border.png must be separately laid over in the meantime.
+
+The chromakey color is 0x00ff00.  No sprites on the given spritesheet contain this value.  Please be aware of this when designing your backgrounds, borders, and logos.
 
 ##Features Pokevis does not have
 * Support for Gen 6
@@ -66,10 +70,6 @@ Choosing a save file may be implemented in a future version.
   * Didn't bother.  Might put that in later.
 * In-program selection of save files
   * Didn't bother.  Might put that in later.
-* Separate windows for Party and Log
-  * OBS treats SFML-rendered windows as games, and thus does not like Window Capture for them.  And Monitor Capture runs like ass.  Since it sees Pokevis as a game, it really does not like it having two rendering windows for the same program.
-* Getting rid of that awful black space
-  * Maybe if I can get SFML to do that.  I dunno.
 * Support for any Pokémon spritesheet other than the one with which it comes
   * Another instance of hardcoding.  It'd be a lot of work to give better support.
 * Support for genders
@@ -83,11 +83,11 @@ Choosing a save file may be implemented in a future version.
 * Saving when hitting the close button instead of typing the `exit` command
   * Don't know how to fix this.  May research it.
 * Support for any monitor resolution lower than 1920 x 1080
-  * Party display can be illegible when streamed to smaller displays, and the Party display is hard-coded to take the 96 x 96 sprite size into account.
+  * Party display can be illegible when streamed to smaller displays, and the Party display is designed to take the 96 x 96 sprite size into account.
 * Customizable text (font/color)
   * I mean, you can go ahead and put your own font in the folder and rename the file "consola" if you want, but I built Pokevis with a single-width font in mind.  Maybe it's because I'm a programmer, but I like single-width fonts.  Expecially Consolas.
 * Support for separation of the Party and Event Displays in Open Broadcaster Software.
-  * In addition to the reasons listed for having Party and Event rendered in the same window, OBS also does not like accepting two separate captures from the same game.  I dunno.
+  * OBS also does not like accepting two separate captures from the same game, which is what OBS treats SMFL windows as.
 * Support for daycare
   * Not using it for my Nuzlocke.  May implement if there is demand.  Super simple, just didn't feel like it.
 
