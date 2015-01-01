@@ -45,6 +45,8 @@ private:
 	Ticker ticker;
 
 	RenderWindow Win;
+	Texture BkgTex;
+	Sprite Background;
 
 	bool LogLoader();
 	bool DexLoader();

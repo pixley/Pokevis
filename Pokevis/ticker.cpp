@@ -3,17 +3,12 @@
 #include <algorithm>
 
 Ticker::Ticker(RenderWindow& win) : Win(win) {
-	if (!BkgTex.loadFromFile("Ticker Bkg.png"))
-		throw string("Failed to load ticker background.\n");
 	if (!Consolas.loadFromFile("consola.ttf"))
 		throw string("Failed to load font.\n");
 	if (!LogoTex.loadFromFile("Logo.png"))
 		throw string("Failed to load Logo\n");
 
 	FontSize = 16;
-
-	Background.setTexture(BkgTex);
-	Background.setPosition(1320, 96);
 
 	Logo.setTexture(LogoTex);
 	Logo.setPosition(1320, 96);
@@ -80,12 +75,11 @@ void Ticker::Display() {
 		//nothing here; just polling events
 	}
 
-	//draw the background
-	Win.draw(Background);
+	//draw the logo
 	Win.draw(Logo);
 
-	//draw the 24 most recent event strings
-	for (int i = 1; (i < 25) && ((int)(Events.size() - i) >= 0); i++) {
+	//draw the 20 most recent event strings
+	for (int i = 1; (i < 21) && ((int)(Events.size() - i) >= 0); i++) {
 		Text act(Events[Events.size() - i], Consolas, FontSize);
 		act.setPosition(1325, (FontSize) * (i - 1) + 266);
 		Win.draw(act);

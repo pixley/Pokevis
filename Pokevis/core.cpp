@@ -47,7 +47,12 @@ int binary_search(const vector<dex>& sorted_vec, string key) {
 }
 
 Core::Core() : Mecout(ConLock), console(ConLock),
-Win(VideoMode(1920, 96 + 648), "Pokevis Display", Style::None), ticker(Win), Team(Mecout, Win) {
+Win(VideoMode(1920, 1080), "Pokevis Display", Style::None), ticker(Win), Team(Mecout, Win) {
+	if (!BkgTex.loadFromFile("Bkg.png"))
+		throw string("Failed to load background.\n");
+
+	Background.setTexture(BkgTex);
+
 	In = "N/A";
 	ActIn = DEFAULT;
 
@@ -266,6 +271,18 @@ bool Core::Input() {
 }
 
 void Core::Display() {
+	//this method is also used for the event loop, which is required, else the window
+	//becomes unresponsive; Pokevis doesn't use the window for any input
+	Event event;
+	while (Win.pollEvent(event)) {
+		//nothing here; just polling events
+	}
+
+	//fill empty space with pure green for chromakey
+	Win.clear(Color(0, 255, 0, 255));
+
+	//draw the background
+	Win.draw(Background);
 	try {
 		Team.Display();
 		ticker.Display();

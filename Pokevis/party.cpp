@@ -6,9 +6,6 @@ Party::Party(Util::meCout& mecout, RenderWindow& win) : Team(), Disp(mecout, win
 }
 
 void Party::Display() {
-	//cout << "Team size is " << Team.size() << "\n";
-	Disp.DrawBkg();
-
 	if (Team.size() > 6 || Team.size() < 0) {
 		throw "Team size has become invalid.";
 	}

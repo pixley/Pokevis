@@ -9,8 +9,6 @@ Displayer::Displayer(Util::meCout& mecout, RenderWindow& win) : Win(win), Mecout
 		throw string("Failed to load spritesheet.\n");
 	if(!Consolas.loadFromFile("consola.ttf"))
 		throw string("Failed to load font.\n");
-	if (!Background.loadFromFile("Bkg.png"))
-		throw string("Failed to load background.\n");
 	if (!Ball.loadFromFile("Ball.png"))
 		throw string("Failed to load ball image.\n");
 	NameSize = 32;
@@ -23,15 +21,7 @@ Displayer::~Displayer(){
 }
 
 void Displayer::DrawBkg() {
-	//this method is also used for the event loop, which is required, else the window
-	//becomes unresponsive; Pokevis doesn't use the window for any input
-	Event event;
-	while (Win.pollEvent(event)) {
-		//nothing here; just polling events
-	}
-	Sprite bkg(Background);
-
-	Win.draw(bkg);
+	
 }
 
 void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, bool alive, unsigned int partyPos) {
