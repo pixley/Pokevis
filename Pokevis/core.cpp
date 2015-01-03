@@ -50,8 +50,12 @@ Core::Core() : Mecout(ConLock), console(ConLock),
 Win(VideoMode(1920, 1080), "Pokevis Display", Style::None), ticker(Win), Team(Mecout, Win) {
 	if (!BkgTex.loadFromFile("Bkg.png"))
 		throw string("Failed to load background.\n");
+	if (!LogoTex.loadFromFile("Logo.png"))
+		throw string("Failed to load Logo\n");
 
 	Background.setTexture(BkgTex);
+	Logo.setTexture(LogoTex);
+	Logo.setPosition(1320, 96);
 
 	In = "N/A";
 	ActIn = DEFAULT;
@@ -59,6 +63,14 @@ Win(VideoMode(1920, 1080), "Pokevis Display", Style::None), ticker(Win), Team(Me
 	PC.reserve(100);
 
 	Win.setPosition(Vector2i(0, 0));
+
+	Win.setFramerateLimit(60);
+
+	//fill empty space with pure green for chromakey
+	Win.clear(Color(0, 255, 0, 255));
+
+	Win.draw(Background);
+	Win.draw(Logo);
 
 	Win.display();
 }
@@ -70,7 +82,6 @@ bool Core::LogLoader() {
 	ifstream save("save.txt");
 
 	if (!save.is_open()) {
-		cout << "Just checking that there isn't a file!\n";
 		return false;
 	}
 
@@ -164,14 +175,18 @@ unsigned int Core::NameToNum(string species) {
 }
 
 __declspec(noinline) bool Core::Init() {
+	SetForegroundWindow(GetConsoleWindow());
 	cout << "Welcome to Pokevis, a Nuzlocke stream visualizer tool.\n";
 
 	string loaded("Game resumed!");
-	string begin("Game begun!");
 
 	if (!LogLoader()) {
-		cout << "No save data found.  Creating new run.  Good luck.\n";
-		ticker.AddEvent(&begin);
+		cout << "No save data found.  Creating new run.  Please enter your character's name: ";
+		string protag;
+		getline(cin, protag);
+		protag = protag + " has started a journey with Pokémon!";
+		ticker.AddEvent(&protag);
+		cout << "Good luck and have fun!\n";
 	}
 	else {
 		cout << "Save data loaded.  Welcome back and good luck.\n";
@@ -183,7 +198,6 @@ __declspec(noinline) bool Core::Init() {
 
 void Core::Loop() {
 	thread conThread(&Con::input, ref(console), ref(ActIn), ref(In));
-	SetForegroundWindow(GetConsoleWindow());
 	while (Input()) {
 		Display();
 	}
@@ -283,6 +297,8 @@ void Core::Display() {
 
 	//draw the background
 	Win.draw(Background);
+	//draw the logo
+	Win.draw(Logo);
 	try {
 		Team.Display();
 		ticker.Display();

@@ -47,6 +47,8 @@ private:
 	RenderWindow Win;
 	Texture BkgTex;
 	Sprite Background;
+	Texture LogoTex;
+	Sprite Logo;
 
 	bool LogLoader();
 	bool DexLoader();

@@ -39,10 +39,10 @@ void Displayer::Draw(unsigned int dexNum, const string& nick, unsigned int lvl, 
 
 	unsigned int pokeWidth = ImgDim + 220;
 
-	icon->setPosition(pokeWidth * partyPos, 0);
-	ball->setPosition(pokeWidth * partyPos, 0);
-	name->setPosition(pokeWidth * partyPos + ImgDim, 10);
-	level->setPosition(pokeWidth * partyPos + ImgDim, 46);
+	icon->setPosition(15 + pokeWidth * partyPos, 0);
+	ball->setPosition(15 + pokeWidth * partyPos, 0);
+	name->setPosition(15 + pokeWidth * partyPos + ImgDim, 10);
+	level->setPosition(15 + pokeWidth * partyPos + ImgDim, 46);
 
 	//throw "Colors being set.\n";
 

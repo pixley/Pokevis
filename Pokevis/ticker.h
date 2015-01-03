@@ -15,8 +15,6 @@ private:
 	RenderWindow& Win;
 	Texture BkgTex;
 	Sprite Background;
-	Texture LogoTex;
-	Sprite Logo;
 	Font Consolas;
 	vector<string> Events;
 
