@@ -11,6 +11,7 @@ using namespace std;
 
 namespace Util {
 	void strSplit(string str, vector<string>& tokens, char delim);
+	string currentTimeToString();
 
 	class meCout {
 	private:

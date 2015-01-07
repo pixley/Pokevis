@@ -19,26 +19,7 @@ Ticker::~Ticker() {
 }
 
 void Ticker::AddEvent(string* act) {
-	//add timestamp to the event
-	time_t time = chrono::system_clock::to_time_t(chrono::system_clock::now());
-	tm uTime;
-	tm* utcTime = &uTime;
-	gmtime_s(utcTime, &time);
-	int m = utcTime->tm_mon;
-	int d = utcTime->tm_mday;
-	int h = utcTime->tm_hour;
-	int min = utcTime->tm_min;
-
-	char c_stamp[21];
-
-	sprintf_s(c_stamp, "[%2d-%2d\t%2d:%2dZ]", m + 1, d, h, min);
-
-	string stamp(c_stamp);
-
-	replace(stamp.begin(), stamp.end(), ' ', '0');
-	replace(stamp.begin(), stamp.end(), '\t', ' ');
-
-	Events.emplace_back(string(stamp + " " + *act));
+	Events.emplace_back(string(Util::currentTimeToString() + " " + *act));
 }
 
 void Ticker::AddEvent(string* act, Ticker& t) {
@@ -71,10 +52,15 @@ void Ticker::Display() {
 		//nothing here; just polling events
 	}
 
-	//draw the 20 most recent event strings
-	for (int i = 1; (i < 21) && ((int)(Events.size() - i) >= 0); i++) {
+	string currentTimeStr = "Current timestamp: " + Util::currentTimeToString();
+	Text time(currentTimeStr, Consolas, FontSize);
+	time.setPosition(1325, 266);
+	Win.draw(time);
+
+	//draw the 19 most recent event strings
+	for (int i = 1; (i < 20) && ((int)(Events.size() - i) >= 0); i++) {
 		Text act(Events[Events.size() - i], Consolas, FontSize);
-		act.setPosition(1325, (FontSize) * (i - 1) + 266);
+		act.setPosition(1325, (FontSize) * (i) + 266);
 		Win.draw(act);
 	}
 }
